@@ -1,5 +1,4 @@
 import axios from 'axios';
-import useAuth from "../hooks/useAuth.ts";
 
 // Configurar axios, que es el agente que hace las solitudes al servidor, para que siempre incluya el token.
 export const api = axios.create({
