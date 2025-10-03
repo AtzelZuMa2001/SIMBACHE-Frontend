@@ -1,4 +1,6 @@
 // Este es el objeto que vamos a enviar al backend para crear un inicio de sesión.
+import type {AxiosResponse} from "axios";
+
 export interface LoginPayload {
     username: string;
     passwordHash: string;
@@ -17,6 +19,6 @@ export interface LoginResponse {
 export interface AuthContextType {
     loginData: LoginResponse | null;
     loading: boolean;
-    login: (payload: LoginPayload) => Promise<LoginResponse>;
+    login: (payload: LoginPayload) => Promise<AxiosResponse<LoginResponse>>;
     logout: () => void;
 };

@@ -6,7 +6,6 @@ import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import {ReactQueryDevtools} from "@tanstack/react-query-devtools";
 import {ThemeContextProvider} from "./theme/ThemeProvider.tsx";
 import {AuthProvider} from "./auth/AuthProvider.tsx";
-import LoginPage from "./pages/LoginPage.tsx";
 
 const queryClient = new QueryClient();
 
@@ -20,5 +19,5 @@ createRoot(document.getElementById('root')!).render(
               </QueryClientProvider>
           </AuthProvider>
       </ThemeContextProvider>
-  </StrictMode>,
+  </StrictMode>
 )

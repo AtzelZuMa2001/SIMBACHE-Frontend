@@ -1,10 +1,10 @@
 import {Alert, Box, Button, InputAdornment, Paper, Stack, TextField, Typography} from "@mui/material";
 import {LockRounded, Person3Rounded} from '@mui/icons-material';
-import bgImage from '../assets/mikahil_nilov_pexels.webp';
-import logo from '../assets/favicon.webp'
+import bgImage from '../../assets/mikahil_nilov_pexels.webp';
+import logo from '../../assets/favicon.webp'
 import {type FormEvent, useState} from "react";
-import useAuth from "../hooks/useAuth.ts";
-import type {LoginPayload} from "../types/Login.ts";
+import useAuth from "../../hooks/useAuth.ts";
+import type {LoginPayload} from "../../types/Login.ts";
 import {sha256} from "js-sha256";
 import {useLocation, useNavigate} from "react-router-dom";
 
@@ -34,7 +34,7 @@ export default function LoginPage() {
             navigate(from, {replace: true});
 
         } catch(error: Error | any) {
-            setError(error?.message ?? 'Inicio de sesión fallido')
+            setError(error?.message ?? 'Inicio de sesión fallido. Contacta al administrador para más detalles.')
         }
     }
 

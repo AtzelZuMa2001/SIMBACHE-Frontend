@@ -1,6 +1,7 @@
 import {createContext, type ReactNode, useState} from "react";
 import type {AuthContextType, LoginPayload, LoginResponse} from '../types/Login.ts';
 import {api} from "../utils/api.ts";
+import type {AxiosResponse} from "axios";
 
 // Estas cosas llamadas contexto nos permite guardar valores de manera global, y acceder a ellos desde cualquier parte de la app.
 export const AuthContext = createContext<AuthContextType | null>(null);
@@ -30,9 +31,9 @@ export function AuthProvider({children} : {children: ReactNode}) {
         setLoading(true);
 
         try {
-            const response = await api.post<LoginPayload, LoginResponse>('/api/auth/login', payload)
-
-            setLoginData(response);
+            const response = await api.post<LoginPayload, AxiosResponse<LoginResponse>>('/api/auth/login', payload)
+            console.log(response)
+            setLoginData(response.data);
             localStorage.setItem(STORAGE_KEY, JSON.stringify(response));
             return response;
         } finally {
