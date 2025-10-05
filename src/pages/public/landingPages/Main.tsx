@@ -1,23 +1,24 @@
-import bgImage from "../../assets/claudio_schwarz_pothole.webp";
-import companyImage1 from '../../assets/mediensturmer.webp';
-import companyImage2 from '../../assets/hector_emilio_gonzalez.webp';
-import companyImage3 from '../../assets/morgan_von_gunten.webp';
+import bgImage from "../../../assets/claudio_schwarz_pothole.webp";
+import companyImage1 from '../../../assets/mediensturmer.webp';
+import companyImage2 from '../../../assets/hector_emilio_gonzalez.webp';
+import companyImage3 from '../../../assets/morgan_von_gunten.webp';
 import {Box, Button, Paper, Stack, Typography} from "@mui/material";
 import {
     AccessTimeRounded,
     AddLocationRounded,
-    AddRoadRounded, Image,
+    AddRoadRounded,
     type SvgIconComponent,
     VerifiedUserRounded
 } from "@mui/icons-material";
+import {Footer} from "../../../components/public/Footer.tsx";
 
-type CardContent = {
+type CardContentType = {
     Icon: SvgIconComponent;
     title: string;
     description: string;
 };
 
-const infoCards: CardContent[] = [
+const infoCards: CardContentType[] = [
     {
         Icon: AddLocationRounded,
         title: 'Reporta un bache',
@@ -35,13 +36,13 @@ const infoCards: CardContent[] = [
     }
 ];
 
-type ContractorsCardContent = {
+type ContractorsCardContentType = {
     image: string;
     title: string;
     description: string;
 };
 
-const contractorsCards: ContractorsCardContent[] = [
+const contractorsCards: ContractorsCardContentType[] = [
     {
         image: companyImage1,
         title: 'Aplica para ser un contratista',
@@ -59,14 +60,15 @@ const contractorsCards: ContractorsCardContent[] = [
     }
 ];
 
-export default function MainPage() {
+export default function Main() {
     return (
-        // Sección de Hero, o la principal, pues
-        <Box position={'absolute'} width={'100vw'} maxWidth={'100%'} height={'100vh'} top={0} left={0}>
+        <>
+            // Sección de Hero, o la principal, pues
             <Box
                 component={'section'}
                 sx={{
                     height: 800,
+                    width: '100%',
                     backgroundImage: `linear-gradient(to top, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.2) 100%), url(${bgImage});`,
                     backgroundSize: "cover",
                     backgroundPosition: "center",
@@ -76,7 +78,6 @@ export default function MainPage() {
                     justifyContent: "center",
                     textAlign: "center",
                     color: "white",
-                    p: 4
                 }}
             >
                 <Typography
@@ -111,7 +112,7 @@ export default function MainPage() {
             {/* Sección de las tarjetas */}
             <Box
                 component={'section'}
-                width={'100vw'} maxWidth={'100%'}
+                width={'100%'}
                 sx={{
                     textAlign: 'center',
                     py: 10,
@@ -126,15 +127,15 @@ export default function MainPage() {
                     Nuestro sistema agiliza la reparación de los baches. Para los ciudadanos, los contratistas y los funcionarios públicos.
                 </Typography>
 
-                <Stack direction={'row'} spacing={4} alignItems={'center'} justifyContent={'center'}>
-                    { infoCards.map( (cardContent: CardContent) => SimpleCard(cardContent) ) }
+                <Stack direction={'row'} spacing={4} alignItems={'center'} justifyContent={'center'} flexWrap={'wrap'}>
+                    { infoCards.map( (cardContent: CardContentType) => SimpleCard(cardContent) ) }
                 </Stack>
             </Box>
 
             {/* Para contratistas */}
             <Box
                 component={'section'}
-                width={'100vw'} maxWidth={'100%'}
+                width={'100%'}
                 sx={{ py: 10, pb: 4 }}
             >
                 <Typography variant={'h4'} color={'textPrimary'} fontWeight={700} textAlign={'center'} sx={{ mb: 3 }}>
@@ -146,39 +147,25 @@ export default function MainPage() {
                     Sin licitaciones, sin complicaciones.<br />Estarás ayudando a construir un México mejor.
                 </Typography>
 
-                <Stack direction={'row'} spacing={4} justifyContent={'center'}>
-                    { contractorsCards.map((card: ContractorsCardContent) => (
+                <Stack direction={'row'} spacing={4} justifyContent={'center'} flexWrap={'wrap'}>
+                    { contractorsCards.map((card: ContractorsCardContentType) => (
                         ImageCard(card)
                     )) }
                 </Stack>
             </Box>
 
-            {/* El footer, el mensaje del final */}
-            <Paper
-                component={'footer'}
-                sx={{
-                    width: '100vw',
-                    maxWidth: '100%',
-                    height: 50,
-                    mt: 10,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-            }}
-            >
-                <Typography variant={'body1'} color={'textDisabled'}>
-                    © {new Date().getFullYear()} SIMBACHE. Todos los derechos reservados.
-                </Typography>
-            </Paper>
-        </Box>
+            <Footer />
+
+        </>
     );
 }
 
-function SimpleCard({Icon, title, description}: CardContent) {
+function SimpleCard({Icon, title, description}: CardContentType) {
     return (
         <Paper
             elevation={0}
-            sx={{ width: 450, py: 4, p: 4  }}
+            sx={{ width: {lg: 350, xl: 450}, py: 4, p: 4  }}
+            key={title}
         >
             <Box sx={{ fontSize: 85 }} >
                 <Icon
@@ -202,11 +189,12 @@ function SimpleCard({Icon, title, description}: CardContent) {
     );
 }
 
-function ImageCard({image, title, description}: ContractorsCardContent) {
+function ImageCard({image, title, description}: ContractorsCardContentType) {
     return (
         <Paper
             elevation={0}
-            sx={{ width: 450, borderRadius: 4, overflow: "hidden" }}
+            sx={{ width: {lg: 350, xl: 450}, borderRadius: 4, overflow: "hidden" }}
+            key={title}
         >
             <Box
                 component="img"
