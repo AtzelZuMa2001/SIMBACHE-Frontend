@@ -1,7 +1,7 @@
 import type {JSX} from "react";
-import Contractors from "../Contractors.tsx";
-import Contact from "../Contact.tsx";
-import Main from "../Main.tsx";
+import Contractors from "./Contractors.tsx";
+import Contact from "./Contact.tsx";
+import Main from "./Main.tsx";
 
 export interface LandingPage {
     name: 'Inicio' | 'Contratistas' | 'Contáctanos',

@@ -147,7 +147,7 @@ export default function LoginPage() {
                         <Button
                             variant={'contained'}
                             sx={{
-                                height: 55
+                                height: 55, borderRadius: 2
                             }}
                             disabled={user.length == 0 || password.length == 0 || auth.loading}
                             type={'submit'}

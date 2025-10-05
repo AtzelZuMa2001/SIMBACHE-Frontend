@@ -4,9 +4,9 @@ import NotFoundPage from "../pages/NotFoundPage.tsx";
 import HomePage from "../pages/protected/HomePage.tsx";
 import LoginPage from "../pages/public/LoginPage.tsx";
 import LandingPage from "../pages/public/LandingPage.tsx";
-import AboutUs from "../pages/public/AboutUs.tsx";
-import ContractorsPage from "../pages/public/ContractorsPage.tsx";
-import CitizenReportPage from "../pages/public/CitizenReportPage.tsx";
+import Contact from "../pages/public/landingPages/Contact.tsx";
+import Contractors from "../pages/public/landingPages/Contractors.tsx";
+import CitizenReport from "../pages/public/landingPages/CitizenReport.tsx";
 
 const MainRouter = createBrowserRouter(
     createRoutesFromElements(
@@ -14,9 +14,9 @@ const MainRouter = createBrowserRouter(
             {/* Public routes */}
             <Route path={'/'} element={<LandingPage />} />
             <Route path={'login'} element={<LoginPage />} />
-            <Route path={'contact'} element={<AboutUs />} />
-            <Route path={'contractors'} element={<ContractorsPage />} />
-            <Route path={'report'} element={<CitizenReportPage />} />
+            <Route path={'contact'} element={<Contact />} />
+            <Route path={'contractors'} element={<Contractors />} />
+            <Route path={'report'} element={<CitizenReport />} />
 
             {/* Protected routes */}
             <Route path={'internal'} element={<ProtectedRoute />}>

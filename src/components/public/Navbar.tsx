@@ -2,7 +2,7 @@ import {AppBar, Box, Button, Stack, Toolbar, Typography} from "@mui/material";
 import logo from '../../assets/favicon.webp'
 import useTheme from "../../hooks/useTheme.tsx";
 import {useNavigate} from "react-router-dom";
-import {AllLandingPages, type LandingPage} from "../../pages/public/AllLandingPages.ts";
+import {AllLandingPages, type LandingPage} from "../../pages/public/landingPages/AllLandingPages.ts";
 
 interface NavbarProps {
     activePage: LandingPage;
@@ -30,6 +30,7 @@ export default function Navbar({onPageChange}: NavbarProps) {
                         variant={'h5'}
                         component={'h1'}
                         fontWeight={600}
+                        color={'textPrimary'}
                         sx={{ ml: 2, mt: 0.5 }}
                     >
                         SIMBACHE
