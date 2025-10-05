@@ -1,5 +1,5 @@
 
-export default function ContactPage() {
+export default function AboutUs() {
     return (
         <>
             <h1>Contact</h1>

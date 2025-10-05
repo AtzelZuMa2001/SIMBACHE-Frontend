@@ -8,7 +8,7 @@ interface ThemeContextProps {
     toggleDarkMode: () => void;
 }
 
-const ThemeContext = createContext<ThemeContextProps | null>(null);
+export const ThemeContext = createContext<ThemeContextProps | null>(null);
 
 export function ThemeContextProvider({children}: {children: ReactNode}) {
     const [isDarkMode, setIsDarkMode] = useState(false);

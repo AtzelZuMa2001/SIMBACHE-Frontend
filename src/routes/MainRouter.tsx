@@ -4,7 +4,7 @@ import NotFoundPage from "../pages/NotFoundPage.tsx";
 import HomePage from "../pages/protected/HomePage.tsx";
 import LoginPage from "../pages/public/LoginPage.tsx";
 import LandingPage from "../pages/public/LandingPage.tsx";
-import ContactPage from "../pages/public/ContactPage.tsx";
+import AboutUs from "../pages/public/AboutUs.tsx";
 import ContractorsPage from "../pages/public/ContractorsPage.tsx";
 import CitizenReportPage from "../pages/public/CitizenReportPage.tsx";
 
@@ -14,7 +14,7 @@ const MainRouter = createBrowserRouter(
             {/* Public routes */}
             <Route path={'/'} element={<LandingPage />} />
             <Route path={'login'} element={<LoginPage />} />
-            <Route path={'contact'} element={<ContactPage />} />
+            <Route path={'contact'} element={<AboutUs />} />
             <Route path={'contractors'} element={<ContractorsPage />} />
             <Route path={'report'} element={<CitizenReportPage />} />
 
