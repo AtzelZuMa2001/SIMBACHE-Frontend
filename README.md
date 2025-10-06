@@ -4,6 +4,8 @@
 
 A digital platform that empowers citizens and local governments to report, track, and manage pothole repairs efficiently across Mexico.
 
+> This project is not related to the Mexican gov. It is a college homework.
+
 ---
 
 ## Overview
@@ -58,4 +60,7 @@ See the [LICENSE](./LICENSE.txt) file for details.
 
 ---
 
-**SIMBACHE** — *Un México que cuida sus calles.*
+**This project is not related in any way to the Mexican government.** It is just a college homework, but I wanted to brand it like a real world product.
+
+SIMBACHE Copyright © 2025, kosail
+With love, from Honduras.
