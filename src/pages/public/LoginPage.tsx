@@ -1,4 +1,4 @@
-import {Alert, Box, Button, InputAdornment, Paper, Stack, TextField, Typography} from "@mui/material";
+import {Alert, Box, Button, Container, InputAdornment, Paper, Stack, TextField, Typography} from "@mui/material";
 import {LockRounded, Person3Rounded} from '@mui/icons-material';
 import bgImage from '../../assets/mikahil_nilov_pexels.webp';
 import logo from '../../assets/favicon.webp'
@@ -13,7 +13,10 @@ export default function LoginPage() {
 
     const navigate = useNavigate();
     const location = useLocation();
-    const from: string = location.state?.from || '/';
+    // If the user was redirected here from a protected route, `ProtectedRoute` stored the
+    // originally requested path in `location.state.from`. Otherwise, after a successful login
+    // we want to land on the secure home by default.
+    const from: string = location.state?.from || '/secure/home';
 
     const [user, setUser] = useState<string>('');
     const [password, setPassword] = useState<string>('');
@@ -30,8 +33,11 @@ export default function LoginPage() {
                 passwordHash: hashedPassword
             };
 
+            // Perform login; if it succeeds, navigate to either:
+            // - the originally requested protected route stored in `from`, or
+            // - '/secure/home' when the user came directly to the login page.
             await auth.login(payload)
-            navigate(from, {replace: true});
+            navigate(from, { replace: true });
 
         } catch(error: Error | any) {
             setError(error?.message ?? 'Inicio de sesión fallido. Contacta al administrador para más detalles.')
@@ -39,7 +45,7 @@ export default function LoginPage() {
     }
 
     return (
-        <>
+        <Container maxWidth={false} disableGutters>
             <Box
                 component={'img'}
                 src={bgImage}
@@ -170,6 +176,6 @@ export default function LoginPage() {
                 </Box>
                 {error && <Alert severity={'error'} sx={{ mb: 2 }}>{error}</Alert> }
             </Paper>
-        </>
+        </Container>
     );
 }

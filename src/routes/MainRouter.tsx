@@ -19,7 +19,7 @@ const MainRouter = createBrowserRouter(
             <Route path={'report'} element={<CitizenReport />} />
 
             {/* Protected routes */}
-            <Route path={'internal'} element={<ProtectedRoute />}>
+            <Route path={'secure'} element={<ProtectedRoute />}>
                 <Route path={'home'} element={<HomePage />} />
             </Route>
 
