@@ -10,7 +10,7 @@ export const AuthContext = createContext<AuthContextType | null>(null);
 localStorage es un tipo de almacenamiento local adentro de los navegadores web, y nos permite guardar cosas en el navegador
 para que si recargamos la página o la cerramos y la volvemos a abrir, estas cosas se mantengan.
  */
-const STORAGE_KEY = 'auth';
+export const STORAGE_KEY = 'auth';
 
 export function AuthProvider({children} : {children: ReactNode}) {
     // Para llevar saber si el proceso de login está procesándose o ya ha terminado
@@ -32,9 +32,8 @@ export function AuthProvider({children} : {children: ReactNode}) {
 
         try {
             const response = await api.post<LoginPayload, AxiosResponse<LoginResponse>>('/api/auth/login', payload)
-            console.log(response)
             setLoginData(response.data);
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(response));
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(response.data));
             return response;
         } finally {
             setLoading(false);

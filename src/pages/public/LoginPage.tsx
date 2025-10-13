@@ -13,7 +13,7 @@ export default function LoginPage() {
 
     const navigate = useNavigate();
     const location = useLocation();
-    // If the user was redirected here from a protected route, `ProtectedRoute` stored the
+    // If the user was redirected here from a secure route, `ProtectedRoute` stored the
     // originally requested path in `location.state.from`. Otherwise, after a successful login
     // we want to land on the secure home by default.
     const from: string = location.state?.from || '/secure/home';
@@ -34,7 +34,7 @@ export default function LoginPage() {
             };
 
             // Perform login; if it succeeds, navigate to either:
-            // - the originally requested protected route stored in `from`, or
+            // - the originally requested secure route stored in `from`, or
             // - '/secure/home' when the user came directly to the login page.
             await auth.login(payload)
             navigate(from, { replace: true });

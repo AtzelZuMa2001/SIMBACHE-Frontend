@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {STORAGE_KEY} from "../auth/AuthProvider.tsx";
 
 // Configurar axios, que es el agente que hace las solitudes al servidor, para que siempre incluya el token.
 export const api = axios.create({
@@ -11,7 +12,8 @@ export const api = axios.create({
     Si no hay nada, no hagas nada y devuelve la configuración como ya estaba.
  */
 api.interceptors.request.use(config => {
-    const token = localStorage.getItem('token');
+    const loginInfo: string = localStorage.getItem(STORAGE_KEY);
+    const token: string = loginInfo ? JSON.parse(loginInfo).token : null;
 
     if (token) {
         config.headers['X-Auth-Token'] = token;

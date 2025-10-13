@@ -11,6 +11,8 @@ import {
     VerifiedUserRounded
 } from "@mui/icons-material";
 import {Footer} from "../../../components/public/Footer.tsx";
+import {useState} from "react";
+import CitizenReport from "../../../components/public/CitizenReport.tsx";
 
 type CardContentType = {
     Icon: SvgIconComponent;
@@ -61,6 +63,8 @@ const contractorsCards: ContractorsCardContentType[] = [
 ];
 
 export default function Main() {
+    const [showReportForm, setShowReportForm] = useState(false);
+
     return (
         <>
             // Sección de Hero, o la principal, pues
@@ -101,7 +105,7 @@ export default function Main() {
                     variant={'contained'}
                     color={'secondary'}
                     sx={{ mt: 6 }}
-                    onClick={() => { /* TODO */ }}
+                    onClick={() => setShowReportForm(true) }
                     disableRipple
                 >
                     <Typography variant={'body1'} color={'white'} sx={{ p: 1, mt: 0.5 }}>Reportar un bache</Typography>
@@ -156,6 +160,9 @@ export default function Main() {
 
             <Footer />
 
+            {showReportForm &&
+              <CitizenReport open={showReportForm} onClose={() => setShowReportForm(false)} />
+            }
         </>
     );
 }
