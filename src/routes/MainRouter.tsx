@@ -6,6 +6,7 @@ import LoginPage from "../pages/public/LoginPage.tsx";
 import LandingPage from "../pages/public/LandingPage.tsx";
 import Contact from "../pages/public/landingPages/Contact.tsx";
 import Contractors from "../pages/public/landingPages/Contractors.tsx";
+import VehicleTypesCrud from "../pages/secure/VehicleTypesCrud.tsx";
 
 const MainRouter = createBrowserRouter(
     createRoutesFromElements(
@@ -22,6 +23,7 @@ const MainRouter = createBrowserRouter(
                 <Route path={'potholes'} element={<SecureContainer />} />
                 <Route path={'reports'} element={<SecureContainer />} />
                 <Route path={'administration'} element={<SecureContainer />} />
+                <Route path={'vehicletypes'} element={<VehicleTypesCrud />} />
             </Route>
 
             {/* Catch-all */}

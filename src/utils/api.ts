@@ -3,7 +3,7 @@ import {STORAGE_KEY} from "../auth/AuthProvider.tsx";
 
 // Configurar axios, que es el agente que hace las solitudes al servidor, para que siempre incluya el token.
 export const api = axios.create({
-    baseURL: 'http://localhost:8080',
+    baseURL: 'http://localhost:31234',
     timeout: 3000,
 });
 
@@ -12,7 +12,7 @@ export const api = axios.create({
     Si no hay nada, no hagas nada y devuelve la configuración como ya estaba.
  */
 api.interceptors.request.use(config => {
-    const loginInfo: string = localStorage.getItem(STORAGE_KEY);
+    const loginInfo: string | null = localStorage.getItem(STORAGE_KEY);
     const token: string = loginInfo ? JSON.parse(loginInfo).token : null;
 
     if (token) {
