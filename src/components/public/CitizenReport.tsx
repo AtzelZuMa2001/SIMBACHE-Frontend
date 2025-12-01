@@ -1,4 +1,4 @@
-import {Dialog, Card, CardContent, CardHeader, Typography} from "@mui/material";
+import {Dialog, Card, CardContent, CardHeader} from "@mui/material";//, Typography
 
 interface CitizenReportProps {
     open: boolean;

@@ -1,7 +1,8 @@
 import type {JSX} from "react";
-import SecureContainer from "./SecureContainer.tsx";
+//import SecureContainer from "./SecureContainer.tsx";
 import Home from "./Home.tsx";
 import VehicleTypesCrud from "./VehicleTypesCrud.tsx";
+import RepairManagementPage from "./RepairManagementPage.tsx";
 
 export interface SecurePages {
     name: 'Inicio' | 'Baches' | 'Reportes' | 'Administración' | 'Tipos de vehículos';
@@ -15,7 +16,7 @@ export const AllSecurePages: SecurePages[] = [
     },
     {
         name: 'Baches',
-        Element: Home
+        Element: RepairManagementPage
     },
     {
         name: 'Reportes',
