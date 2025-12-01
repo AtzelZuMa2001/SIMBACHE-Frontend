@@ -5,7 +5,7 @@ import VehicleTypesCrud from "./VehicleTypesCrud.tsx";
 import RepairManagementPage from "./RepairManagementPage.tsx";
 
 export interface SecurePages {
-    name: 'Inicio' | 'Baches' | 'Reportes' | 'Administración' | 'Tipos de vehículos';
+    name: 'Inicio' | 'Baches' | 'Reparaciones' | 'Reportes' | 'Administración' | 'Tipos de vehículos';
     Element: () => JSX.Element;
 }
 
@@ -16,6 +16,10 @@ export const AllSecurePages: SecurePages[] = [
     },
     {
         name: 'Baches',
+        Element: Home
+    },
+    {
+        name: 'Reparaciones',
         Element: RepairManagementPage
     },
     {
