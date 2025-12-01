@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react'; // <--- AGREGAR useEffect
 import {
     Alert,
     Box,
@@ -13,13 +13,15 @@ import {
     TextField,
     Typography
 } from '@mui/material';
+// ... imports de iconos ...
 import SearchRounded from '@mui/icons-material/SearchRounded';
 import SaveRounded from '@mui/icons-material/SaveRounded';
 import EditRounded from '@mui/icons-material/EditRounded';
 import DeleteRounded from '@mui/icons-material/DeleteRounded';
 import CancelRounded from '@mui/icons-material/CancelRounded';
 
-import { RepairService } from '../../utils/RepairService';
+// Importamos las nuevas interfaces del servicio
+import { RepairService, type Squad, type RepairStatus } from '../../utils/RepairService';
 import type { PotholeRepairDTO } from '../../types/RepairTypes';
 
 export default function RepairManagementPage() {
@@ -29,24 +31,33 @@ export default function RepairManagementPage() {
     const [data, setData] = useState<PotholeRepairDTO | null>(null);
     const [isEditing, setIsEditing] = useState<boolean>(false);
 
-    // Snackbar
+    // --- ESTADOS PARA CATÁLOGOS (Dinámicos) ---
+    const [squadsList, setSquadsList] = useState<Squad[]>([]);
+    const [statusesList, setStatusesList] = useState<RepairStatus[]>([]);
+
     const [snackbar, setSnackbar] = useState<{ open: boolean; success: boolean; message: string } | null>(null);
 
-    // --- CATÁLOGOS ---
-    const squads = [
-        { id: 1, name: "Cuadrilla Alfa" },
-        { id: 2, name: "Cuadrilla Bravo" }
-    ];
+    // --- EFECTO DE CARGA INICIAL ---
+    useEffect(() => {
+        // Cargamos los catálogos al entrar a la página
+        const fetchCatalogs = async () => {
+            try {
+                const result = await RepairService.getCatalogs();
+                setSquadsList(result.squads);
+                setStatusesList(result.statuses);
+            } catch (error) {
+                console.error("Error cargando catálogos", error);
+                setSnackbar({ open: true, success: false, message: "Error conectando con el servidor para catálogos." });
+            }
+        };
+        fetchCatalogs();
+    }, []);
 
-    const statuses = [
-        { id: 1, name: "PENDIENTE" },
-        { id: 2, name: "EN PROCESO" },
-        { id: 3, name: "TERMINADO" }
-    ];
-
-    // --- HANDLERS ---
+    // --- HANDLERS (Igual que antes) ---
     const handleSearch = async () => {
+        // Validación del ID negativo/cero
         if (!searchId || Number(searchId) < 1) return;
+
         setLoading(true);
         setData(null);
         setIsEditing(false);
@@ -62,6 +73,7 @@ export default function RepairManagementPage() {
         }
     };
 
+    // ... (Mantén handleSave, handleDelete y handleInputChange igual que antes) ...
     const handleSave = async () => {
         if (!data) return;
         setLoading(true);
@@ -85,8 +97,6 @@ export default function RepairManagementPage() {
         try {
             const msg = await RepairService.deleteRepair(data.potholeId);
             setSnackbar({ open: true, success: true, message: msg });
-
-            // Limpiar UI visualmente
             setData({ ...data, repairId: null, squadId: null, startDate: null, endDate: null, statusId: null });
             setIsEditing(false);
         } catch (err: any) {
@@ -100,6 +110,7 @@ export default function RepairManagementPage() {
     const handleInputChange = (field: keyof PotholeRepairDTO, value: any) => {
         if (data) setData({ ...data, [field]: value });
     };
+
 
     return (
         <Box display={'flex'} height={'100%'} width={'100vw'} maxWidth={'100%'} justifyContent={'center'} alignItems={'flex-start'}>
@@ -116,14 +127,9 @@ export default function RepairManagementPage() {
                         variant="outlined"
                         size="small"
                         type="number"
+                        inputProps={{ min: 1 }}
                         value={searchId}
-                        onChange={(e) => {
-                            const val = e.target.value;
-                            // Solo actualiza si está vacío (permite borrar) o si es positivo
-                            if (val === '' || Number(val) > 0) {
-                                setSearchId(val);
-                            }
-                        }}
+                        onChange={(e) => setSearchId(e.target.value)}
                         sx={{ flexGrow: 1 }}
                         onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
                     />
@@ -137,18 +143,14 @@ export default function RepairManagementPage() {
                     </Button>
                 </Paper>
 
-                {/* FORMULARIO DE DATOS */}
                 {data && (
                     <Paper elevation={3} sx={{ p: 4, width: '100%' }}>
 
-                        {/* SECCIÓN DATOS DEL BACHE (SOLO LECTURA) */}
                         <Typography variant="h6" color="primary" gutterBottom>
                             Detalles del Reporte #{data.potholeId}
                         </Typography>
 
-                        {/* Usamos STACK en lugar de Grid para evitar errores */}
                         <Stack spacing={2} sx={{ mb: 4 }}>
-                            {/* Fila 1 */}
                             <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
                                 <TextField label="Ciudadano" value={data.citizenName} fullWidth variant="filled" InputProps={{ readOnly: true }} />
                                 <TextField
@@ -157,7 +159,6 @@ export default function RepairManagementPage() {
                                     fullWidth variant="filled" InputProps={{ readOnly: true }}
                                 />
                             </Stack>
-                            {/* Fila 2 */}
                             <TextField
                                 label="Ubicación"
                                 value={`${data.streetName} (${data.betweenStreets})`}
@@ -165,14 +166,12 @@ export default function RepairManagementPage() {
                             />
                         </Stack>
 
-                        {/* SECCIÓN DATOS DE REPARACIÓN (EDITABLE) */}
                         <Box sx={{ borderTop: 1, borderColor: 'divider', pt: 3 }}>
                             <Typography variant="h6" color="primary" gutterBottom>
                                 Asignación de Reparación
                             </Typography>
 
                             <Stack spacing={3}>
-                                {/* Fila 1 de inputs */}
                                 <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
                                     <Box sx={{ width: '100%' }}>
                                         <FormControl fullWidth>
@@ -183,8 +182,11 @@ export default function RepairManagementPage() {
                                                 onChange={(e) => handleInputChange('squadId', Number(e.target.value))}
                                                 disabled={!isEditing}
                                             >
-                                                {squads.map(sq => (
-                                                    <MenuItem key={sq.id} value={sq.id}>{sq.name}</MenuItem>
+                                                {/* Iteramos sobre el estado squadsList */}
+                                                {(squadsList || []).map(sq => (
+                                                    <MenuItem key={sq.squadId} value={sq.squadId}>
+                                                        {sq.squadName}
+                                                    </MenuItem>
                                                 ))}
                                             </Select>
                                         </FormControl>
@@ -201,7 +203,6 @@ export default function RepairManagementPage() {
                                     />
                                 </Stack>
 
-                                {/* Fila 2 de inputs */}
                                 <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
                                     <TextField
                                         label="Fecha Fin"
@@ -222,8 +223,11 @@ export default function RepairManagementPage() {
                                                 onChange={(e) => handleInputChange('statusId', Number(e.target.value))}
                                                 disabled={!isEditing}
                                             >
-                                                {statuses.map(st => (
-                                                    <MenuItem key={st.id} value={st.id}>{st.name}</MenuItem>
+                                                {/* Iteramos sobre el estado statusesList */}
+                                                {(statusesList || []).map(st => (
+                                                    <MenuItem key={st.statusId} value={st.statusId}>
+                                                        {st.statusName}
+                                                    </MenuItem>
                                                 ))}
                                             </Select>
                                         </FormControl>
@@ -231,7 +235,6 @@ export default function RepairManagementPage() {
                                 </Stack>
                             </Stack>
 
-                            {/* BOTONERA DE ACCIONES */}
                             <Stack direction="row" spacing={2} justifyContent="flex-end" sx={{ mt: 4 }}>
                                 {!isEditing ? (
                                     <>
@@ -279,7 +282,6 @@ export default function RepairManagementPage() {
                 )}
             </Stack>
 
-            {/* NOTIFICACIONES */}
             <Snackbar
                 open={!!snackbar?.open}
                 autoHideDuration={4000}
