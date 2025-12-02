@@ -9,7 +9,7 @@ import {
 import { useRepairManagement } from '../../hooks/useRepairManagement';
 
 export default function RepairManagementPage() {
-    // ¡AQUÍ ESTÁ LA MAGIA! Toda la lógica en una sola línea
+
     const { state, actions } = useRepairManagement();
 
     const { displayData, catalogs } = state;
