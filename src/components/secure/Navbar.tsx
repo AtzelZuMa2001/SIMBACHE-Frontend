@@ -12,6 +12,14 @@ interface NavbarProps {
 export default function Navbar({onPageChange}: NavbarProps) {
     const auth = useAuth();
     const name = auth.loginData?.firstName + ' ' + auth.loginData?.lastName;
+    const today = new Date().toLocaleDateString(
+        'es-ES', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'numeric',
+            day: 'numeric'
+        }
+    );
 
     return (
         <AppBar component={'nav'}>
@@ -40,8 +48,22 @@ export default function Navbar({onPageChange}: NavbarProps) {
                     ))}
                 </Stack>
 
-                <Stack direction={'row'} spacing={2} alignItems={'center'} justifyContent={'center'} >
-                    <Typography variant={'body1'} color={'#f1f1f1'} sx={{ p:1 }}>{name}</Typography>
+                <Stack direction={'column'} alignItems={'flex-end'} spacing={0} sx={{ mr: 1 }}>
+                    <Typography
+                        variant={'body1'}
+                        color={'#f1f1f1'}
+                        fontWeight={600}
+                        lineHeight={1.2}
+                    >
+                        {name}
+                    </Typography>
+                    <Typography
+                        variant={'caption'}
+                        color={'#e0e0e0'}
+                        lineHeight={1}
+                    >
+                        {today}
+                    </Typography>
                 </Stack>
                 
                 <Button variant={'contained'} color={'tertiary'} onClick={() => auth.logout()} sx={{ ml: 2 }}>
